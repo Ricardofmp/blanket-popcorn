@@ -16,9 +16,10 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 1rem;
     line-height: 1.58;
-    color: #0F3A7F;
-    background-color: #f4f4f4;
+    color: #c8c8c8;
+    background-color: #7c7c7c31;
     height: 100%;
+    background-image: url('../img/cinemaImage.png');
 
 
 
@@ -28,7 +29,10 @@ body {
     background-size: cover;
 }
 
-
+#border{
+    border:#ffee00;
+    border-radius: 5px;
+}
 
 .clearfix:after {
     display: block;
@@ -66,7 +70,7 @@ h1 {
 }
 
 a {
-    color: #128ff2;
+    color: #c8c8c8;
 }
 
 button {
@@ -91,15 +95,15 @@ button.default {
 }
 
 button.primary {
-    background-color: #25be38;
+    background-color: #c8c8c8;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
     color: #fff;
 }
 
 button.accent {
-    background-color: #1778dd;
+    background-color: #c8c8c8;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
-    color: #fff;
+    color: #690707;
 }
 
 #username-page {
@@ -107,7 +111,7 @@ button.accent {
 }
 
 .username-page-container {
-    background: #fff;
+    background: #690707;
     box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
     border-radius: 2px;
     width: 100%;

@@ -7,9 +7,10 @@ var messageForm = document.querySelector('#messageForm');
 var messageInput = document.querySelector('#message');
 var messageArea = document.querySelector('#messageArea');
 var connectingElement = document.querySelector('.connecting');
-var videoContainer = document.getElementById('movieFrame');
+var videoContainer = document.getElementsByClassName('video-container')[0];
 var searchButton = document.getElementById('searchButton');
 var searchBar = document.getElementById('searchBar');
+var videoPlayer = document.querySelector('.video-js');
 
 
 var stompClient = null;
@@ -33,14 +34,21 @@ function connect(event) {
         stompClient.connect({}, onConnected, onError);
     }
     event.preventDefault();
+    document.body.style.background = "black";
 }
 
 searchButton.onclick = function()
-{
-    console.log(searchBar.value)
-
-    document.getElementById('movieFrame').src = searchBar.value;
-    document.getElementById('movieFrame').load();
+{  
+    var vid =  videojs(videoPlayer);
+    vid.src({
+        src: searchBar.value,
+        type: 'video/mp4'
+      });
+     
+    videoContainer.classList.remove('hidden');
+    
+    
+    
 
 };
 
@@ -56,6 +64,7 @@ function onConnected() {
     )
 
     connectingElement.classList.add('hidden');
+
 }
 
 
@@ -82,12 +91,13 @@ function send(event) {
 }
 
 function onStop(){
-console.log(videoContainer.currentTime)
+    var vid =  videojs(videoPlayer);
+    console.log(vid.currentTime())
     var chatMessage = {
         sender: username,
-        content: videoContainer.currentTime,
+        content: vid.currentTime(),
         type: 'PAUSE',
-        timeStamp: videoContainer.currentTime
+        timeStamp: vid.currentTime()
     }
 
             stompClient.send("/app/chat.send", {}, JSON.stringify(chatMessage));
@@ -95,12 +105,13 @@ console.log(videoContainer.currentTime)
 }
 
 function onPlay(){
-console.log(videoContainer.currentTime)
+    var vid =  videojs(videoPlayer);
+    console.log(videoContainer.currentTime)
     var chatMessage = {
         sender: username,
-        content: videoContainer.currentTime,
+        content: vid.currentTime(),
         type: 'PLAY',
-        timeStamp: videoContainer.currentTime
+        timeStamp: vid.currentTime()
     }
 
             stompClient.send("/app/chat.send", {}, JSON.stringify(chatMessage));
@@ -108,8 +119,11 @@ console.log(videoContainer.currentTime)
 }
 
 
+
 function onMessageReceived(payload) {
     var message = JSON.parse(payload.body);
+
+    var vid =  videojs(videoPlayer);
 
     var messageElement = document.createElement('li');
 
@@ -148,21 +162,26 @@ function onMessageReceived(payload) {
     messageArea.appendChild(messageElement);
     messageArea.scrollTop = messageArea.scrollHeight;
     }
-            if(message.type === 'PLAY'){
-                videoContainer.setTime = message.timeStamp;
+            if(message.type === 'PLAY' && vid.paused()){
+                vid.currentTime(message.timeStamp);
                 playVid();
-            }else if(message.type === 'PAUSE' && videoContainer.paused === false){
-                videoContainer.setTime = message.timeStamp;
+            }else if(message.type === 'PAUSE' && !vid.paused()){
+                vid.currentTime(message.timeStamp);
                 pauseVid();
             }
 }
 
 function playVid() {
-    videoContainer.play();
+    var vid =  videojs(videoPlayer);
+    vid.play();
+    console.log("video played!")
 }
 
 function pauseVid() {
-    videoContainer.pause();
+    var vid =  videojs(videoPlayer);
+    vid.pause();
+    console.log("video paused!")
+
 }
 
 

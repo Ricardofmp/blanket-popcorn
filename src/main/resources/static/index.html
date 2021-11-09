@@ -3,8 +3,9 @@
 <head>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>WebChat</title>
+    <title>Blanket&Popcorn</title>
     <link rel="stylesheet" href="/css/main.css" />
+    <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -33,7 +34,7 @@
     </div>
     <div class="chat-container">
         <div class="chat-header">
-            <h2>Party Pobre</h2>
+            <h2>Chat</h2>
         </div>
         <div class="connecting">Wait...</div>
         <ul id="messageArea">
@@ -49,8 +50,8 @@
             </div>
         </form>
     </div>
-    <div id="video-container">                                                                           <!--https://cache62.vidoza.net/nvl4do4c7meuieno3wbazah2hjypgurlzl353shdfcnj23kw6g2idl7pjl4a/v.mp4*/-->
-        <video onplaying="onPlay()" onpause="onStop()" id="movieFrame" src="" width="1000" height="800" controls></video>
+    <div class="video-container hidden border">                                                                           <!--https://cache62.vidoza.net/nvl4do4c7meuieno3wbazah2hjypgurlzl353shdfcnj23kw6g2idl7pjl4a/v.mp4*/-->
+        <video class="video-js border" onplaying="onPlay()" onpause="onStop()" id="movieFrame" src="" controls="false"></video>
     </div>
 </div>
 
@@ -59,5 +60,7 @@
 <script
         src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script src="/js/main.js"></script>
+<script src="https://vjs.zencdn.net/7.15.4/video.min.js"></script>
+<script>videojs(document.querySelector('.video-js'));</script>
 </body>
 </html>
